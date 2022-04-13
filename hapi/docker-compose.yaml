@@ -1,0 +1,44 @@
+version: '3.7'
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=3321
+      - POSTGRES_DB=main
+    ports:
+      - "5432:5432"
+    networks:
+      - node_rest
+
+  mongodb:
+    container_name: mongodb
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONTO_INITDB_ROOT_PASSWORD=3321
+    ports:
+      - "27017:27017"
+    networks:
+      - node_rest
+
+  hapi:
+    container_name: "hapi-api"
+    command: npm start
+    build:
+      dockerfile: hapi.api.dockerfile
+      context: .
+    environment:
+      - MONGODB_HOST=mongodb
+      - POSTGRES_HOST=postgres
+    ports:
+      - "3001:3001"
+    networks:
+      - node_rest
+    depends_on: [ postgres, mongodb ]
+
+networks:
+  node_rest:
+    driver: bridge
