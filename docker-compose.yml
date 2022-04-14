@@ -26,7 +26,6 @@ services:
 
   hapi:
     container_name: "hapi-api"
-    command: npm start
     build:
       dockerfile: hapi.api.dockerfile
       context: .
@@ -36,6 +35,40 @@ services:
       - POSTGRES_HOST=postgres
     ports:
       - "3001:3001"
+    networks:
+      - node_rest
+    depends_on: 
+    - postgres
+    - mongodb
+
+  nestjs:
+    container_name: "nestjs-api"
+    build:
+      dockerfile: nestjs.api.dockerfile
+      context: .
+    environment:
+      - NODE_ENV=production
+      - MONGODB_HOST=mongodb
+      - POSTGRES_HOST=postgres
+    ports:
+      - "3002:3000"
+    networks:
+      - node_rest
+    depends_on: 
+    - postgres
+    - mongodb
+
+  express:
+    container_name: "express-api"
+    build:
+      dockerfile: express.api.dockerfile
+      context: .
+    environment:
+      - NODE_ENV=production
+      - MONGODB_HOST=mongodb
+      - POSTGRES_HOST=postgres
+    ports:
+      - "3003:3000"
     networks:
       - node_rest
     depends_on: 
