@@ -1,16 +1,16 @@
 const PostgreSQLClient = require("../database/Postgres");
 const MongoDBClient = require("../database/MongoDB");
 const Strategy = require("../database/Strategy");
+const { ok, error } = require("../utils/fornatOutput");
 
-// TODO: Possivelmente centralizar a padronização de retorno em uma função
 const createUser = async (req, head, DBContext) => {
   try {
     const user = req.payload;
     const createdUser = await DBContext.create(user);
 
-    return { data: createdUser || null, error: null };
+    return ok(createdUser);
   } catch (err) {
-    return { data: null, error: err.message };
+    return error(err);
   }
 };
 
@@ -18,9 +18,9 @@ const getAllUsers = async (req, head, DBContext) => {
   try {
     const users = await DBContext.read();
 
-    return { data: users || null, error: null };
+    return ok(users);
   } catch (err) {
-    return { data: null, error: err.message };
+    return error(err);
   }
 };
 
@@ -30,9 +30,9 @@ const getUserById = async (req, head, DBContext) => {
     const user = await DBContext.read(id);
     if (!user) throw new Error("User not found");
 
-    return { data: user, error: null };
+    return ok(user);
   } catch (err) {
-    return { data: null, error: err.message };
+    return error(err);
   }
 };
 
@@ -42,9 +42,9 @@ const updateUser = async (req, head, DBContext) => {
     const body = req.payload;
     const updatedUser = await DBContext.update(id, body);
 
-    return { data: updatedUser || null, error: null };
+    return ok(updatedUser);
   } catch (err) {
-    return { data: null, error: err.message };
+    return error(err);
   }
 };
 
@@ -53,9 +53,9 @@ const deleteUser = async (req, head, DBContext) => {
     const { id } = req.params;
     await DBContext.delete(id);
 
-    return { data: null, error: null };
+    return ok();
   } catch (err) {
-    return { data: null, error: err.message };
+    return error(err);
   }
 };
 
@@ -90,6 +90,7 @@ class UserController {
           return { data: null, error: "Route not defined" };
       }
     }
+    return response(null, "Could not connect to data source");
   }
 }
 

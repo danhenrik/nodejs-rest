@@ -18,7 +18,7 @@ services:
     image: mongo
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONTO_INITDB_ROOT_PASSWORD=3321
+      - MONGO_INITDB_ROOT_PASSWORD=3321
     ports:
       - "27017:27017"
     networks:
@@ -31,13 +31,16 @@ services:
       dockerfile: hapi.api.dockerfile
       context: .
     environment:
+      - NODE_ENV=production
       - MONGODB_HOST=mongodb
       - POSTGRES_HOST=postgres
     ports:
       - "3001:3001"
     networks:
       - node_rest
-    depends_on: [ postgres, mongodb ]
+    depends_on: 
+    - postgres
+    - mongodb
 
 networks:
   node_rest:
