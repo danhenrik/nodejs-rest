@@ -66,11 +66,7 @@ class UserController {
 
     if (dbContext === 0) DBClient = PostgreSQLClient;
     else if (dbContext === 1) DBClient = MongoDBClient;
-    else
-      return {
-        data: null,
-        error: "query param 'db' is needed to proceed (0 or 1)",
-      };
+    else return error("query param 'db' is needed to proceed (0 or 1)");
 
     const DBContext = new Strategy(DBClient);
 
@@ -87,10 +83,10 @@ class UserController {
         case "delete":
           return deleteUser(req, head, DBContext);
         default:
-          return { data: null, error: "Route not defined" };
+          return error("Route not defined");
       }
     }
-    return response(null, "Could not connect to data source");
+    return error("Could not connect to data source");
   }
 }
 
