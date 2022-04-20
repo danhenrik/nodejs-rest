@@ -1,42 +1,46 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Database } from 'src/database/database';
 
 @Injectable()
 export class UsersService {
+  // TODO: Since the repo is now static, inject it just like it was before
+
   // TODO: Have a closer look at how to implement this using multiple databases
   // First idea would be to diferentiate via url query choosing the connecation
   // using the getConnection from typeorm directly, going arround NestJS stuff,
   // but that sounds not right.
-  /* 
+  /*
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
   ) {}
   */
+  constructor(private readonly DBContext: Database) {}
 
-  // constructor(private usersRepository: Repository<User>) {}
-
-  create(createUserDto: CreateUserDto) {
-    return User.create(createUserDto).save();
+  async create(dbCode: number, createUserDto: CreateUserDto) {
+    const createdUser = await this.DBContext.create(dbCode, createUserDto);
+    return createdUser;
   }
 
-  findAll() {
-    return User.find();
+  async findAll(dbCode: number) {
+    const users = await this.DBContext.getAll(dbCode);
+    return users;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(dbCode: number, id: number) {
+    const user = await this.DBContext.getById(dbCode, id);
+    if (!user) throw new Error('User not found');
+    return user;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(dbCode: number, id: number, updateUserDto: UpdateUserDto) {
+    const updatedUser = await this.DBContext.update(dbCode, id, updateUserDto);
+    return updatedUser;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(dbCode: number, id: number) {
+    await this.DBContext.delete(dbCode, id);
   }
 }

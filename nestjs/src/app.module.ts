@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
+import { Environment } from './config';
+import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './users/users.module';
-import { Environment, ORM } from './config';
 
 @Module({
   /*
@@ -10,11 +11,8 @@ import { Environment, ORM } from './config';
   */
   imports: [
     Environment /* Configure environment variables */,
-    ...ORM(),
+    DatabaseModule,
     UsersModule,
   ],
-  controllers: [],
-  providers: [],
-  exports: [...ORM()],
 })
 export class AppModule {}

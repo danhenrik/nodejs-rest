@@ -1,16 +1,16 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 import {
   Entity,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
   BaseEntity,
-  ObjectIdColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @Entity()
-export class User extends BaseEntity {
-  @ObjectIdColumn() // Possibly gonna throw errors when integrating with MongoDB
+export class UserPG extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: string;
 
@@ -32,3 +32,22 @@ export class User extends BaseEntity {
   @CreateDateColumn()
   createdAt: Date;
 }
+
+export type UserDocument = UserMongo & Document;
+
+@Schema()
+export class UserMongo {
+  @Prop()
+  email: string;
+
+  @Prop()
+  username: string;
+
+  @Prop()
+  password: string;
+
+  @Prop()
+  name: string;
+}
+
+export const UserSchema = SchemaFactory.createForClass(UserMongo);
