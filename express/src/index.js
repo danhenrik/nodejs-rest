@@ -1,12 +1,17 @@
-require("dotenv").config();
+require('dotenv').config();
 
-const express = require("express");
-const UserRouter = require("./controllers/UserController");
+const express = require('express');
+const UserController = require('./controllers/UserController');
+const { errorHandler } = require('./middlewares/errorHandler');
 
 const { PORT } = process.env;
 
 const app = express();
 
-app.use("/", UserRouter);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.listen(PORT, () => console.log(`API listening on ${PORT}`));
+app.use('/', UserController);
+app.use(errorHandler);
+
+app.listen(PORT, () => console.log(`API listening on port ${PORT}`));
