@@ -15,7 +15,10 @@ class PostgresClient extends ICrud {
         console.log("PostgreSQL up and running!");
         this.conn = sequelize;
       })
-      .catch(() => console.log("Could not connect to PostgreSQL"));
+      .catch((e) => {
+        console.log("Could not connect to PostgreSQL");
+        console.error(e);
+      });
     this.User = User;
   }
 
@@ -35,7 +38,6 @@ class PostgresClient extends ICrud {
 
   async read(id = null) {
     const res = id ? await User.findByPk(id) : await User.findAll();
-    console.log(res);
     return res;
   }
 

@@ -11,7 +11,10 @@ async function connect() {
 class MongoClient extends ICrud {
   constructor() {
     super();
-    connect().catch(() => console.log("Could not connect to MongoDB"));
+    connect().catch((e) => {
+      console.log("Could not connect to MongoDB");
+      console.error(e);
+    });
     this.conn = mongoose.connection;
     this.conn.once("open", () => console.log("MongoDB up and running!"));
   }

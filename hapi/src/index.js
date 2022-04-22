@@ -1,6 +1,7 @@
+require("dotenv").config();
+
 const Hapi = require("@hapi/hapi");
 const UserController = require("./controllers/UserController");
-require("dotenv").config();
 
 const { PORT } = process.env;
 
