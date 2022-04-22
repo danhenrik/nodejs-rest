@@ -9,7 +9,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity()
+@Entity('Users')
 export class UserPG extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: string;
@@ -33,10 +33,10 @@ export class UserPG extends BaseEntity {
   createdAt: Date;
 }
 
-export type UserDocument = UserMongo & Document;
+export type UserDocument = User & Document;
 
 @Schema()
-export class UserMongo {
+export class User {
   @Prop()
   email: string;
 
@@ -50,4 +50,4 @@ export class UserMongo {
   name: string;
 }
 
-export const UserSchema = SchemaFactory.createForClass(UserMongo);
+export const UserSchema = SchemaFactory.createForClass(User);

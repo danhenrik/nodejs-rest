@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ORM } from 'src/config';
-import { UserMongo, UserPG, UserSchema } from 'src/users/entities/user.entity';
+import { User, UserPG, UserSchema } from 'src/users/entities/user.entity';
 import { PostgresClient } from './postgres-client';
 import { MongoClient } from './mongo-client';
 import { Database } from './database';
@@ -10,7 +10,7 @@ import { Database } from './database';
 @Module({
   imports: [
     ...ORM(),
-    MongooseModule.forFeature([{ name: UserMongo.name, schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     TypeOrmModule.forFeature([UserPG]),
   ],
   providers: [MongoClient, PostgresClient, Database],
