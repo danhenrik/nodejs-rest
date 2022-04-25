@@ -1,6 +1,6 @@
 import { MongooseModule } from '@nestjs/mongoose';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserPG} from '../users/entities/user.entity';
+import { UserPG } from '../users/entities/user.entity';
 
 export default () => [
   TypeOrmModule.forRoot({
