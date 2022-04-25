@@ -34,3 +34,7 @@ There's a small list of future implementations possibilities worth your time, th
 - Implement tests
   - Unit tests
   - E2E tests
+
+# Endpoints
+
+[Endpoints documentation](https://documenter.getpostman.com/view/19873266/UyrBjwi8)
