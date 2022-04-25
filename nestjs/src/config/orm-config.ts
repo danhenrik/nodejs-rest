@@ -14,6 +14,6 @@ export default () => [
     synchronize: true,
   }),
   MongooseModule.forRoot(
-    `mongodb://admin:3321@${process.env.MONGO_HOST}:27017`,
+    `mongodb://admin:3321@${process.env.MONGODB_HOST}:27017`,
   ),
 ];

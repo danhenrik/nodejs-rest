@@ -5,18 +5,6 @@ import { Database } from 'src/database/database';
 
 @Injectable()
 export class UsersService {
-  // TODO: Since the repo is now static, inject it just like it was before
-
-  // TODO: Have a closer look at how to implement this using multiple databases
-  // First idea would be to diferentiate via url query choosing the connecation
-  // using the getConnection from typeorm directly, going arround NestJS stuff,
-  // but that sounds not right.
-  /*
-  constructor(
-    @InjectRepository(User)
-    private usersRepository: Repository<User>,
-  ) {}
-  */
   constructor(private readonly DBContext: Database) {}
 
   async create(dbCode: number, createUserDto: CreateUserDto) {
