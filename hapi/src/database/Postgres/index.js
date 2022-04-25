@@ -35,9 +35,10 @@ class PostgresClient extends ICrud {
     const updatedUser = await user.save();
     return updatedUser;
   }
-
+  
   async delete(id) {
     const user = await User.findByPk(id);
+    if (!user) throw new Error('User not found!');
     await user.destroy();
   }
 }
