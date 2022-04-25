@@ -17,4 +17,4 @@ app.route([
   },
 ]);
 
-app.start().then(() => console.log(`API listening on port ${PORT}`));
+app.start().then(() => console.log(`Hapi.js API listening on port ${PORT}`));

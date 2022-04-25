@@ -14,4 +14,4 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/', UserController);
 app.use(errorHandler);
 
-app.listen(PORT, () => console.log(`API listening on port ${PORT}`));
+app.listen(PORT, () => console.log(`Express API listening on port ${PORT}`));
