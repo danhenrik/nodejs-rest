@@ -2,21 +2,10 @@ const ICrud = require('../../interfaces/ICrud');
 const mongoose = require('mongoose');
 const User = require('../../models/mongo/User');
 
-async function connect() {
-  await mongoose.connect(
-    `mongodb://admin:3321@${process.env.MONGODB_HOST}:27017`,
-  );
-}
-
 class MongoClient extends ICrud {
   constructor() {
     super();
-    connect().catch((e) => {
-      console.log('Could not connect to MongoDB');
-      console.error(e);
-    });
     this.conn = mongoose.connection;
-    this.conn.once('open', () => console.log('MongoDB up and running!'));
   }
 
   async isConnected() {

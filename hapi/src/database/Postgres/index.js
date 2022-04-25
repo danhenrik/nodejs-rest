@@ -1,24 +1,10 @@
-const ICrud = require("../../interfaces/ICrud");
-const sequelize = require("../config");
-const User = require("../../models/postgres/User");
-
-async function connect() {
-  await sequelize.sync();
-  return sequelize;
-}
+const ICrud = require('../../interfaces/ICrud');
+const sequelize = require('../config');
+const User = require('../../models/postgres/User');
 
 class PostgresClient extends ICrud {
   constructor() {
     super();
-    connect()
-      .then((sequelize) => {
-        console.log("PostgreSQL up and running!");
-        this.conn = sequelize;
-      })
-      .catch((e) => {
-        console.log("Could not connect to PostgreSQL");
-        console.error(e);
-      });
     this.User = User;
   }
 
@@ -43,7 +29,7 @@ class PostgresClient extends ICrud {
 
   async update(id, updatedEntity) {
     const user = await User.findByPk(id);
-    if (!user) throw new Error("User not found!");
+    if (!user) throw new Error('User not found!');
     Object.assign(user, updatedEntity);
     const updatedUser = await user.save();
     return updatedUser;
