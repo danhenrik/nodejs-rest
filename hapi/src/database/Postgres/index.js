@@ -5,6 +5,7 @@ const User = require('../../models/postgres/User');
 class PostgresClient extends ICrud {
   constructor() {
     super();
+    this.conn = sequelize;
     this.User = User;
   }
 
